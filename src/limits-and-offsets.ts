@@ -1,22 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-//If need to see the logs and query
-//const prisma = new PrismaClient({ log: ["info", "query"] });
 
 async function main() {
   // ... you will write your Prisma Client queries here
-  await prisma.post.create({
-    data: {
-      title: "Learning how to code",
-      content: "I am learning diff ORMs and diff databases",
-      published: true,
-      author: {
-        connect: {
-          id: 1,
-        },
-      }, // or we can do just do authorId : 1
-    },
+
+  //it will show 3 posts --> Can work on pagination to show only 3 posts
+  let res = await prisma.post.findMany({
+    take: 3, //limit in sql
+    skip: 2, //offset in sql
   });
 }
 
